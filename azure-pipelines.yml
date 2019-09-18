@@ -1,7 +1,7 @@
 pr: ["master"]
 
 jobs:
-  - job: fuzz-two-way
+  - job: fuzz_two_way
     displayName: "Fuzz (two way)"
     pool:
       vmImage: 'ubuntu-16.04'
@@ -14,7 +14,7 @@ jobs:
           set -ex
           export RUST_BACKTRACE=1
           cargo fuzz run two_way -- -max_total_time=300 -rss_limit_mb=4096
-  - job: fuzz-four-way
+  - job: fuzz_four_way
     displayName: "Fuzz (four way)"
     pool:
       vmImage: 'ubuntu-16.04'
@@ -27,7 +27,7 @@ jobs:
           set -ex
           export RUST_BACKTRACE=1
           cargo fuzz run four_way -- -max_total_time=300 -rss_limit_mb=4096
-  - job: tests-all-features
+  - job: tests_all_features
     displayName: "Tests (all features)"
     pool:
       vmImage: 'ubuntu-16.04'
@@ -40,7 +40,7 @@ jobs:
           export RUST_BACKTRACE=1
           cargo test --all --all-features
         displayName: "Run `cargo test`"
-  - job: tests-no-default-features
+  - job: tests_no_default_features
     displayName: "Tests (no default features)"
     pool:
       vmImage: 'ubuntu-16.04'
