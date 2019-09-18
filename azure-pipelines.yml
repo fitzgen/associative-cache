@@ -13,7 +13,7 @@ jobs:
       - bash: |
           set -ex
           export RUST_BACKTRACE=1
-          cargo fuzz run two_way -- -max_total_time=300 -rss_limit_mb=4096
+          cargo +nightly fuzz run two_way -- -max_total_time=300 -rss_limit_mb=4096
   - job: fuzz_four_way
     displayName: "Fuzz (four way)"
     pool:
@@ -26,7 +26,7 @@ jobs:
       - bash: |
           set -ex
           export RUST_BACKTRACE=1
-          cargo fuzz run four_way -- -max_total_time=300 -rss_limit_mb=4096
+          cargo +nightly fuzz run four_way -- -max_total_time=300 -rss_limit_mb=4096
   - job: tests_all_features
     displayName: "Tests (all features)"
     pool:
