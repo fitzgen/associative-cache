@@ -1,0 +1,31 @@
+[package]
+name = "associative-cache-fuzz"
+version = "0.0.1"
+authors = ["Automatically generated"]
+publish = false
+edition = "2018"
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+bufrng = "1"
+quickcheck = "0.9"
+
+[dependencies.associative-cache-test-utils]
+path = "../crates/test-utils"
+
+[dependencies.libfuzzer-sys]
+git = "https://github.com/rust-fuzz/libfuzzer-sys.git"
+
+# Prevent this from interfering with workspaces
+[workspace]
+members = ["."]
+
+[[bin]]
+name = "two_way"
+path = "fuzz_targets/two_way.rs"
+
+[[bin]]
+name = "four_way"
+path = "fuzz_targets/four_way.rs"

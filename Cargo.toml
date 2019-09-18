@@ -1,0 +1,28 @@
+[package]
+authors = ["Nick Fitzgerald <fitzgen@gmail.com>"]
+categories = ["memory-management", "caching", "data-structures"]
+description = "A generic N-way associative cache with fixed-size capacity and random or least recently used (LRU) replacement."
+documentation = "https://docs.rs/associative-cache"
+edition = "2018"
+keywords = ["direct-mapped", "associative", "lru", "cache"]
+license = "MIT/Apache-2.0"
+name = "associative-cache"
+repository = "https://github.com/fitzgen/associative-cache"
+version = "1.0.0"
+
+[package.metadata.docs.rs]
+all-features = true
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+rand = { version = "0.7.1", optional = true }
+
+[profile.bench]
+debug = true
+
+[workspace]
+members = [
+    ".",
+    "crates/test-utils",
+]
