@@ -26,7 +26,7 @@ random entry via the `R` type parameter and the `Replacement` trait.
 
 ## Examples
 
-```
+```rust
 use associative_cache::*;
 
 // A two-way associative cache with random replacement mapping
