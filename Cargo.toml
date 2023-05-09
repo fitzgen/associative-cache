@@ -10,6 +10,7 @@ name = "associative-cache"
 readme = "./README.md"
 repository = "https://github.com/fitzgen/associative-cache"
 version = "1.0.1"
+rust-version = "1.65"
 
 [package.metadata.docs.rs]
 all-features = true

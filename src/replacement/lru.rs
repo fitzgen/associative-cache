@@ -17,10 +17,12 @@ pub trait LruTimestamp {
     ///
     /// The entry with smallest timestamp value (according to its `PartialOrd`
     /// implementation) is the one that will be replaced.
-    type Timestamp: PartialOrd;
+    type Timestamp<'a>: PartialOrd
+    where
+        Self: 'a;
 
     /// Get this cache value's timestamp.
-    fn get_timestamp(&self) -> &Self::Timestamp;
+    fn get_timestamp(&self) -> Self::Timestamp<'_>;
 
     /// Update this cache value's timestamp.
     ///
@@ -149,10 +151,10 @@ impl<T> WithLruTimestamp<T> {
 }
 
 impl<T> LruTimestamp for WithLruTimestamp<T> {
-    type Timestamp = Cell<Instant>;
+    type Timestamp<'a> = &'a Cell<Instant> where T: 'a;
 
     #[inline]
-    fn get_timestamp(&self) -> &Self::Timestamp {
+    fn get_timestamp(&self) -> Self::Timestamp<'_> {
         &self.timestamp
     }
 
@@ -228,6 +230,73 @@ mod tests {
             timestamp: Cell::new(t),
             inner: (),
         })
+        .collect::<Vec<_>>();
+
+        let replacement = &mut LruReplacement::default();
+
+        let index = <LruReplacement as Replacement<_, Capacity4>>::choose_for_replacement(
+            replacement,
+            candidates.iter().enumerate(),
+        );
+
+        assert_eq!(index, 3);
+    }
+
+    #[test]
+    fn lru_timestamp_ref() {
+        struct Wrap {
+            timestamp: Instant,
+        }
+        impl LruTimestamp for Wrap {
+            type Timestamp<'a> = &'a Instant;
+            fn get_timestamp(&self) -> Self::Timestamp<'_> {
+                &self.timestamp
+            }
+            fn update_timestamp(&self) {}
+        }
+        let now = Instant::now();
+        let candidates = vec![
+            now,
+            now - Duration::from_secs(1),
+            now - Duration::from_secs(2),
+            now - Duration::from_secs(3),
+        ]
+        .into_iter()
+        .map(|t| Wrap { timestamp: t })
+        .collect::<Vec<_>>();
+
+        let replacement = &mut LruReplacement::default();
+
+        let index = <LruReplacement as Replacement<_, Capacity4>>::choose_for_replacement(
+            replacement,
+            candidates.iter().enumerate(),
+        );
+
+        assert_eq!(index, 3);
+    }
+
+    #[test]
+    fn lru_timestamp_owned() {
+        #[repr(packed)]
+        struct Wrap {
+            timestamp: Instant,
+        }
+        impl LruTimestamp for Wrap {
+            type Timestamp<'a> = Instant;
+            fn get_timestamp(&self) -> Self::Timestamp<'_> {
+                self.timestamp
+            }
+            fn update_timestamp(&self) {}
+        }
+        let now = Instant::now();
+        let candidates = vec![
+            now,
+            now - Duration::from_secs(1),
+            now - Duration::from_secs(2),
+            now - Duration::from_secs(3),
+        ]
+        .into_iter()
+        .map(|t| Wrap { timestamp: t })
         .collect::<Vec<_>>();
 
         let replacement = &mut LruReplacement::default();
