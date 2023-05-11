@@ -328,6 +328,12 @@ where
         self.len
     }
 
+    /// Return `true` if there are zero entries in the cache.
+    #[inline]
+    pub fn is_empty(&self) -> bool {
+        self.len == 0
+    }
+
     /// Insert a new entry into the cache.
     ///
     /// If there is an old entry for this key, or if another entry ends up
@@ -430,7 +436,7 @@ where
         });
         let index = replacement_policy.choose_for_replacement(candidates);
         debug_assert!(
-            I::indices(&key).find(|&i| i == index).is_some(),
+            I::indices(&key).any(|i| i == index),
             "`ReplacementPolicy::choose_for_replacement` must return a candidate index"
         );
         assert!(index < capacity);
@@ -671,7 +677,7 @@ where
         // First, see if we have an entry for this key, or if we have an empty
         // slot where an entry could be placed without replaceing another entry.
         let mut empty_index = None;
-        for index in I::indices(&key) {
+        for index in I::indices(key) {
             assert!(
                 index < capacity,
                 "`Indices::indices` must always yield indices within the capacity"
@@ -706,7 +712,7 @@ where
             ref mut replacement_policy,
             ..
         } = self;
-        let candidates = I::indices(&key).map(|index| {
+        let candidates = I::indices(key).map(|index| {
             assert!(
                 index < capacity,
                 "`I::indices` must always yield indices within the capacity"
@@ -821,6 +827,7 @@ where
     /// let v: Vec<(String, usize)> = cache.into_iter().collect();
     /// ```
     #[inline]
+    #[allow(clippy::should_implement_trait)]
     pub fn into_iter(self) -> IntoIter<K, V> {
         <Self as IntoIterator>::into_iter(self)
     }
