@@ -1,5 +1,0 @@
-steps:
-  - script: cargo install --vers "^0.5" cargo-fuzz
-    displayName: Install `cargo fuzz`
-  - script: cargo fuzz --version
-    displayName: Query `cargo fuzz` version
