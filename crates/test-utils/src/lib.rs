@@ -1,7 +1,6 @@
 pub use associative_cache::*;
 
 use quickcheck::{Arbitrary, Gen};
-use rand::Rng;
 use std::collections::HashMap;
 
 #[derive(Clone, Debug)]
@@ -11,11 +10,8 @@ pub enum MethodCall {
 }
 
 impl Arbitrary for MethodCall {
-    fn arbitrary<G>(g: &mut G) -> Self
-    where
-        G: Gen,
-    {
-        match g.gen_range(0, 2) {
+    fn arbitrary(g: &mut Gen) -> Self {
+        match g.choose(&[0, 1]).unwrap() {
             0 => MethodCall::Insert,
             1 => MethodCall::Remove,
             _ => unreachable!(),
@@ -34,10 +30,7 @@ pub struct MethodCalls {
 unsafe impl Send for MethodCalls {}
 
 impl Arbitrary for MethodCalls {
-    fn arbitrary<G>(g: &mut G) -> Self
-    where
-        G: Gen,
-    {
+    fn arbitrary(g: &mut Gen) -> Self {
         let calls: Vec<MethodCall> = Arbitrary::arbitrary(g);
 
         let entries: HashMap<usize, usize> = Arbitrary::arbitrary(g);

@@ -166,6 +166,8 @@ pub trait Replacement<V, C: Capacity> {
 /// ## Examples
 ///
 /// ```
+/// # #[cfg(feature = "rand")]
+/// # {
 /// use associative_cache::*;
 ///
 /// // A two-way associative cache with random replacement mapping
@@ -197,6 +199,7 @@ pub trait Replacement<V, C: Capacity> {
 ///     HashEightWay,
 ///     LruReplacement,
 /// >::default();
+/// # }
 /// ```
 #[derive(Debug)]
 pub struct AssociativeCache<K, V, C, I, R>
@@ -231,8 +234,8 @@ where
     /// ## Example
     ///
     /// ```
-    /// # fn foo() {
     /// # #[cfg(feature = "rand")]
+    /// # {
     /// use associative_cache::*;
     /// use rand::{rngs::StdRng, SeedableRng};
     /// use std::path::PathBuf;
