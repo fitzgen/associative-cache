@@ -6,7 +6,7 @@
 [![](https://docs.rs/associative-cache/badge.svg)](https://docs.rs/associative-cache/)
 [![](https://img.shields.io/crates/v/associative-cache.svg)](https://crates.io/crates/associative-cache)
 [![](https://img.shields.io/crates/d/associative-cache.svg)](https://crates.io/crates/associative-cache)
-[![Build Status](https://dev.azure.com/fitzgen/associative-cache/_apis/build/status/fitzgen.associative-cache?branchName=master)](https://dev.azure.com/fitzgen/associative-cache/_build/latest?definitionId=2&branchName=master)
+[![](https://github.com/fitzgen/associative-cache/actions/workflows/rust.yml/badge.svg)](https://github.com/fitzgen/associative-cache/actions/workflows/rust.yml)
 
 ## Capacity
 
