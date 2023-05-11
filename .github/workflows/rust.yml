@@ -26,6 +26,8 @@ jobs:
         fuzz_target: ["two_way", "four_way"]
     steps:
     - uses: actions/checkout@v3
+    - run: rustup install nightly
+      name: Install nightly Rust
     - run: cargo install cargo-fuzz
       name: Install `cargo fuzz`
     - run: cargo fuzz --version
