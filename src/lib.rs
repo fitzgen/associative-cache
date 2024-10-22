@@ -2,8 +2,7 @@
 //! structure that supports random and least recently used replacement (or your
 //! own custom algorithm).
 //!
-//! Dive into the documentation for
-//! [`AssociativeCache`](./struct.AssociativeCache.html) to begin.
+//! Dive into the documentation for [`AssociativeCache`] to begin.
 
 #![deny(missing_docs, missing_debug_implementations)]
 
@@ -579,7 +578,6 @@ where
     /// // Otherwise, returns the value that was removed if there was an entry
     /// // for the key.
     /// assert_eq!(cache.remove("hi"), Some(1234));
-
     /// ```
     #[inline]
     pub fn remove<Q>(&mut self, key: &Q) -> Option<V>
