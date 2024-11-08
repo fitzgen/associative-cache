@@ -95,7 +95,7 @@ pub trait Capacity {
 ///
 /// ## Custom Implementation Requirements
 ///
-/// Implementations must be determinisitc.
+/// Implementations must be deterministic.
 ///
 /// All indices yielded must be within the capacity.
 ///
