@@ -54,9 +54,7 @@ pub struct RandomReplacement<R = rand::rngs::StdRng> {
 impl Default for RandomReplacement<rand::rngs::StdRng> {
     #[inline]
     fn default() -> Self {
-        use rand::{Rng, SeedableRng};
-        let rng = rand::rngs::StdRng::seed_from_u64(rand::rngs::OsRng.gen());
-        RandomReplacement { rng }
+        RandomReplacement { rng: rand::make_rng() }
     }
 }
 

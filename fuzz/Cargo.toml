@@ -9,8 +9,7 @@ edition = "2018"
 cargo-fuzz = true
 
 [dependencies]
-bufrng = "1"
-quickcheck = "0.9"
+quickcheck = "1.0.3"
 
 [dependencies.associative-cache-test-utils]
 path = "../crates/test-utils"
