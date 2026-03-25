@@ -667,7 +667,7 @@ where
     /// }
     /// ```
     #[inline]
-    pub fn entry<Q>(&mut self, key: &Q) -> Entry<K, V, C, I, R>
+    pub fn entry<Q>(&mut self, key: &Q) -> Entry<'_, K, V, C, I, R>
     where
         K: Borrow<Q>,
         I: Indices<Q, C>,
@@ -764,7 +764,7 @@ where
     /// }
     /// ```
     #[inline]
-    pub fn iter(&self) -> Iter<K, V> {
+    pub fn iter(&self) -> Iter<'_, K, V> {
         <&Self as IntoIterator>::into_iter(self)
     }
 
@@ -799,7 +799,7 @@ where
     /// }
     /// ```
     #[inline]
-    pub fn iter_mut(&mut self) -> IterMut<K, V> {
+    pub fn iter_mut(&mut self) -> IterMut<'_, K, V> {
         <&mut Self as IntoIterator>::into_iter(self)
     }
 
